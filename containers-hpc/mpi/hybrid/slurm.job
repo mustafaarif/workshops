@@ -1,0 +1,12 @@
+#!/bin/bash
+#SBATCH -J mpi_tester
+#SBATCH -p adm_debug
+#SBATCH --qos ad
+#SBATCH --time=00:05:00
+#SBATCH -N 2
+#SBATCH --ntasks-per-node=24
+#SBATCH --hint=nomultithread
+
+#singularity exec mpicc -o pi.out ./pi.c
+
+srun --mpi=pmi2 -n 48 singularity exec ./mpichv3.sif ./pi.out
