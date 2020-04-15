@@ -72,12 +72,12 @@ $ cd ~/opt/mpich/33
 $ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/mpich33.sif .
 
 # Verify version of mpicc 
-$ singularity exec ~/opt/opt/mpich/33/mpich33.sif mpicc --version
+$ singularity exec ~/opt/mpich/33/mpich33.sif mpicc --version
 
 # Run sample application provided in this directory
-$ singularity exec ~/opt/opt/mpich/33/mpich33.sif mpicc -o pi.out pi.c
+$ singularity exec ~/opt/mpich/33/mpich33.sif mpicc -o pi.out pi.c
 
-$ singularity exec ~/opt/opt/mpich/33/mpich33.sif ./pi.out
+$ singularity exec ~/opt/mpich/33/mpich33.sif ./pi.out
 ```
 # Step 05
 Submit a batch job which spans over 02 nodes to verify that if MPI communication is working fine
