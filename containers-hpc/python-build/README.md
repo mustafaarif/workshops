@@ -102,17 +102,17 @@ Transfer container to HPC system raad2
 ```sh
 # From your local system where you have VPN connection to TAMUQ established, do ssh to raad2 and issue following;
 # We will be storing all over container builds under /opt in our home directory on raad2
-$ mkdir -p ~/opt/python/382
+raad2a:~ $ mkdir -p ~/opt/python/382
 
-$ cd ~/opt/python/382
+raad2a:~ $ cd ~/opt/python/382
 
-$ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/py382docker.sif ~/opt/python/382/
+raad2a:~ $ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/py382docker.sif ~/opt/python/382/
 
 # Verify version of Tensorflow and Python inside the container
-$ singularity exec ~/opt/python/382/py382docker.sif python3 -c 'import tensorflow as tf; print(tf.__version__)'
+raad2a:~ $ singularity exec ~/opt/python/382/py382docker.sif python3 -c 'import tensorflow as tf; print(tf.__version__)'
 
 # Run sample application provided in this directory
-$ singularity exec ~/opt/python/382/py382docker.sif python3 linearreg.py 
+raad2a:~ $ singularity exec ~/opt/python/382/py382docker.sif python3 linearreg.py 
 ```
 
 ## Submit your application as SLURM Batch Job
