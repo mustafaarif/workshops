@@ -31,7 +31,7 @@ $ ln -fs /usr/share/zoneinfo/Asia/Qatar /etc/localtime
 ```
 
 ## Step 03
-Install MPICH inside the container
+Install MPICH inside the container. You can skip this step if you already have a MPICH base container built.
 ```sh
 $ export MPICH_VERSION=3.3
 
