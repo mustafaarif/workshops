@@ -71,8 +71,8 @@ $ cd ~/opt/mpich/33
 
 $ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/mpich33.sif .
 
-# Verify version of mpicc 
-$ singularity exec ~/opt/mpich/33/mpich33.sif mpicc --version
+# Verify version of mpiexec
+$ singularity exec ~/opt/mpich/33/mpich33.sif mpiexec --version
 
 # Run sample application provided in this directory
 $ singularity exec ~/opt/mpich/33/mpich33.sif mpicc -o pi.out pi.c
