@@ -21,7 +21,6 @@ $ mkdir -p ~/container-builds/python && cd ~/container-builds/python
 $ singularity build --sandbox py382docker docker://python:<tag>
 
 #At this stage, check the size of the container you have downloaded
-
 $ du -hs py382docker
 
 $ singularity shell --writable py382docker
@@ -50,12 +49,12 @@ $ mkdir -p ~/opt/python/382 && cd ~/opt/python/382
 $ scp -P <port> student@ml-lab-6bd431c8-71a3-4512-bb90-bc2cdb13d41d.southcentralus.cloudapp.azure.com
 ```
 
-
-
-B. Option 02 (Build from Source)
+## Option 02 (Build from Source)
 Log in to Dev workstation;
+```sh
 
 sudo su - 
+
 mkdir -p ~/container-builds/python && cd ~/container-builds/python
 
 singularity build --sandbox py382 docker://ubuntu:18.04
@@ -80,5 +79,4 @@ make -j 4
 
 make install
 
-Advantages of this approach: 
-You can build Python with various optimized options like Intel MKl, OpenBlas etc
+```
