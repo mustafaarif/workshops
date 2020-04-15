@@ -2,15 +2,22 @@
 
 GROMACS is a versatile package to perform molecular dynamics, i.e. simulate the Newtonian equations of motion for systems with hundreds to millions of particles.
 
-This example demostrates building Gromacs Package with MPI support inside a container and porting it to HPC system "raad2
+This example demonstrates building Gromacs Package with MPI support inside a container and porting it to HPC system "raad2"
 
 
 ## Step 01
 Explore Gromacs website and identify package requirements.
 http://manual.gromacs.org/documentation/2020/install-guide
 
+Note: You can skip Step 02 and Step 03, if you already have a MPICH base container. Instead issue following to copy the exisiting MPICH base container
+```sh
+$ mkdir -p ~/container-builds/gromacs/ && cd ~/container-builds/gromacs/
+
+$ singularity build --sandbox gromacs2020 ~/container-builds/mpich/mpich33
+```
+
 ## Step 02
-Prepare container with pre-reqs
+Prepare sandbox container with development packages installed. You dont have to do this step if you are using base MPICH container which was already built.
 
 ```sh
 $ sudo su - 
@@ -31,7 +38,7 @@ $ ln -fs /usr/share/zoneinfo/Asia/Qatar /etc/localtime
 ```
 
 ## Step 03
-Install MPICH inside the container. You can skip this step if you already have a MPICH base container built.
+Install MPICH inside the container. You dont have to do this step if you are using base MPICH container which was already built.
 ```sh
 $ export MPICH_VERSION=3.3
 
@@ -50,29 +57,48 @@ $ make -j 4
 
 $ make install
 ```
+
 ## Step 04
 Download and build Gromacs
 ```sh
-$ mkdir -p /tmp/downloads
+$ cd ~/container-builds/gromacs2020
 
-$ cd /tmp/downloads && wget http://ftp.gromacs.org/pub/gromacs/gromacs-2020.tar.gz
+$ singularity shell --writable gromacs2020
 
-$ tar -xvzf /tmp/downloads/gromacs-2020.tar.gz
+Singularity> mkdir -p /tmp/downloads
 
-$ cd /tmp/downloads/gromacs-2020
+Singularity> cd /tmp/downloads && wget http://ftp.gromacs.org/pub/gromacs/gromacs-2020.tar.gz
 
-$ mkdir build && cd build
+Singularity> tar -xvzf /tmp/downloads/gromacs-2020.tar.gz
 
-$ cmake .. -DGMX_BUILD_OWN_FFTW=ON -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DGMX_MPI=on
+Singularity> cd /tmp/downloads/gromacs-2020
 
-$ make -j 4
+Singularity> mkdir build && cd build
 
-$ make install
+Singularity> cmake .. -DGMX_BUILD_OWN_FFTW=ON -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DGMX_MPI=on
+# Did you get error that cmake not found? Hint: apt-get install cmake
+
+Singularity> make -j 4
+
+Singularity> make install
 ```
-## Setup environment variables inside the container
+
+## Step 05
+Setup environment variables inside the container
+
 Gromacs supplies a bash script which should be exectued before launching Gromacs simulation.
-However when you are running singularity on raad2 on multi-node it is not possible to interactively set environment variables. Therefore we need to identify which variables are required and set them in container in advance.
+However when you are running singularity on raad2 on multi-node it is not possible to interactively set environment variables. Therefore we need to identify which variables are required and set them in container in advance. This approach applies to various other packages which supply scripts to setup environment.
+
 ```sh
-cd /.singularity.d/
-touch 99-gromacs2020.sh
+Singularity> cd /.singularity.d/
+Singularity> touch 99-gromacs2020.sh
+# Open this file via nano or vim editor and paste below variables;
+LD_LIBRARY_PATH=/usr/local/gromacs/lib:$LD_LIBRARY_PATH
+GMXBIN=/usr/local/gromacs/bin
+GMXDATA=/usr/local/gromacs/share/gromacs
+GMXLDLIB=/usr/local/gromacs/lib
+GMXMAN=/usr/local/gromacs/share/man
+PATH=/usr/local/gromacs/bin:$PATH
+PKG_CONFIG_PATH=/usr/local/gromacs/lib/pkgconfig:$PKG_CONFIG_PATH
+GROMACS_DIR=/usr/local/gromacs
 ```
