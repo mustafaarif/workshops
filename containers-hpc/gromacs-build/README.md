@@ -117,7 +117,7 @@ $ mv ~/container-builds/gromacs2020/gromacs2020.sif /tmp
 $ chown student:student /tmp/gromacs2020.sif
 ```
 
-# Step 07
+## Step 07
 Transfer container to HPC system raad2
 ```sh
 # From your local system where you have VPN connection to TAMUQ established, do ssh to raad2 and issue following;
@@ -130,7 +130,7 @@ raad2a:~ $ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/gr
 raad2a:~ $ singularity exec ~/opt/gromacs/2020/bin/gromacs2020.sif gmx_mpi --version
 ```
 
-# Step 08
+## Step 08
 Make this container act like system native application
 
 * Write a wrapper script which takes all the arguments and pass them to container via exec command
@@ -145,6 +145,12 @@ Now see if we call gmx_mpi natively on system;
 ```sh
 raad2a:~ $ gmx_mpi --version
 ```
-# Create a Batch Job file to run computation on multiple nodes
+## Create Batch Job file to run computation on multiple nodes
 
+Inspect slurm.job in this directory;
+
+```sh
+sbatch slurm.job
+cat slurm-<jobid>.out
+```
 
