@@ -6,7 +6,7 @@ There are various options to satisfy Python build requirements.
   * Quick build wit least effort.
 * Otherwise, build Python on top of desired OS.
   * Requires effort, but offers flexibility of choosing various optimization paramteres.
-## Step 01: Build production ready container
+## Step 01: Build sandbox container
 ### Option 01 (Build from Python Container)
 
 Explore https://hub.docker.com and identify if Python 3.8.2 tag is available.
@@ -37,13 +37,6 @@ Singularity> exit
 
 # Check the size of the container after customizing your container with requirements
 $ du -hs py382docker
-
-# Make your container production ready by converting sandbox to non-writable image file
-$ singularity build py382docker.sif py382docker
-
-# Move container to /tmp so that it can be accessed via student account remotely
-$ mv py382docker.sif /tmp
-$ chown student:student /tmp/py382docker.sif
 
 ```
 
@@ -78,19 +71,32 @@ make -j 4
 make install
 
 ```
+## Step 02
 
-## Transfer container to HPC system raad2
+Convert Sandbox Container to Production ready container (.sif image)
+```sh
+# Make your container production ready by converting sandbox to non-writable image file
+$ singularity build py382docker.sif py382docker
+
+# Move container to /tmp so that it can be accessed via student account remotely
+$ mv py382docker.sif /tmp
+$ chown student:student /tmp/py382docker.sif
+```
+
+## Step 03
+
+Transfer container to HPC system raad2
 
 ```sh
-# From your local system where you have VPN connection established, do ssh to raad2 and issue following;
+# From your local system where you have VPN connection to TAMUQ established, do ssh to raad2 and issue following;
 $ mkdir -p ~/opt/python/382
 $ cd ~/opt/python/382
-$ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/py382docker.sif
+$ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/py382docker.sif .
 
 # Verify version of Tensorflow and Python inside the container
 $ singularity exec py382docker.sif python3 -c 'import tensorflow as tf; print(tf.__version__)'
 
-# Run sample application
+# Run sample application provided in this directory
 $ singularity exec py382docker.sif python3 linearreg.py 
 ```
 
