@@ -87,4 +87,9 @@ $ mkdir -p ~/opt/python/382
 $ cd ~/opt/python/382
 $ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/py382docker.sif
 
+# Verify version of Tensorflow and Python inside the container
+$ singularity exec py382docker.sif python3 -c 'import tensorflow as tf; print(tf.__version__)'
+
+# Run sample application
+singularity exec py382docker.sif python3 linearreg.py 
 ```
