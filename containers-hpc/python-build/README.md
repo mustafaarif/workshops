@@ -94,7 +94,8 @@ $ singularity exec py382docker.sif python3 -c 'import tensorflow as tf; print(tf
 $ singularity exec py382docker.sif python3 linearreg.py 
 ```
 
-## Submit a SLURM job file
+## Submit your application as SLURM Batch Job
+
 Inspect slurm.job file in this directory and make any changes if required
 
 ```sh
