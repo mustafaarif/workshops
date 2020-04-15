@@ -53,14 +53,21 @@ $ make install
 ## Step 04
 Download and build Gromacs
 ```sh
-mkdir -p /tmp/downloads
-cd /tmp/downloads && wget http://ftp.gromacs.org/pub/gromacs/gromacs-2020.tar.gz
-tar -xvzf /tmp/downloads/gromacs-2020.tar.gz
-cd /tmp/downloads/gromacs-2020
-mkdir build && cd build
-cmake .. -DGMX_BUILD_OWN_FFTW=ON -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DGMX_MPI=on
-make -j 4
-make install
+$ mkdir -p /tmp/downloads
+
+$ cd /tmp/downloads && wget http://ftp.gromacs.org/pub/gromacs/gromacs-2020.tar.gz
+
+$ tar -xvzf /tmp/downloads/gromacs-2020.tar.gz
+
+$ cd /tmp/downloads/gromacs-2020
+
+$ mkdir build && cd build
+
+$ cmake .. -DGMX_BUILD_OWN_FFTW=ON -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DGMX_MPI=on
+
+$ make -j 4
+
+$ make install
 ```
 ## Setup environment variables inside the container
 Gromacs supplies a bash script which should be exectued before launching Gromacs simulation.
@@ -69,6 +76,3 @@ However when you are running singularity on raad2 on multi-node it is not possib
 cd /.singularity.d/
 touch 99-gromacs2020.sh
 ```
-
-
-
