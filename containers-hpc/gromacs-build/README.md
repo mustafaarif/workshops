@@ -102,3 +102,16 @@ PATH=/usr/local/gromacs/bin:$PATH
 PKG_CONFIG_PATH=/usr/local/gromacs/lib/pkgconfig:$PKG_CONFIG_PATH
 GROMACS_DIR=/usr/local/gromacs
 ```
+
+## Step 06
+
+Convert Sandbox Container to Production ready container (.sif image)
+
+# Make your container production ready by converting sandbox to non-writable image file
+$ singularity build ~/container-builds/gromacs2020/gromacs2020.sif ~/container-builds/gromacs2020
+
+# Move container to /tmp so that it can be accessed via student account remotely
+
+$ mv ~/container-builds/gromacs2020/gromacs2020.sif /tmp
+
+$ chown student:student /tmp/gromacs2020.sif
