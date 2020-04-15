@@ -2,7 +2,7 @@
 #SBATCH -J gromacs_test
 #SBATCH -p l_long
 #SBATCH --qos ll
-##SBATCH --reservation=training2020
+#SBATCH --reservation=training2020
 #SBATCH --time=01:00:00
 #SBATCH -N 2
 #SBATCH --ntasks-per-node=24
