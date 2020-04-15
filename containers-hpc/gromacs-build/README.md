@@ -106,7 +106,7 @@ GROMACS_DIR=/usr/local/gromacs
 ## Step 06
 
 Convert Sandbox Container to Production ready container (.sif image)
-
+```sh
 # Make your container production ready by converting sandbox to non-writable image file
 $ singularity build ~/container-builds/gromacs2020/gromacs2020.sif ~/container-builds/gromacs2020
 
@@ -115,3 +115,24 @@ $ singularity build ~/container-builds/gromacs2020/gromacs2020.sif ~/container-b
 $ mv ~/container-builds/gromacs2020/gromacs2020.sif /tmp
 
 $ chown student:student /tmp/gromacs2020.sif
+```
+
+# Step 07
+Transfer container to HPC system raad2
+```sh
+# From your local system where you have VPN connection to TAMUQ established, do ssh to raad2 and issue following;
+
+raad2a:~ $ mkdir -p ~/opt/gromacs/2020/bin
+raad2a:~ $ cd ~/opt/gromacs/2020/bin
+raad2a:~ $ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/gromacs2020.sif .
+
+# Verify version of Tensorflow and Python inside the container
+raad2a:~ $ singularity exec ~/opt/gromacs/2020/bin/gromacs2020.sif gmx_mpi --version
+```
+
+# Step 08
+Make this container act like system native application
+
+* Write a wrapper script which takes all the arguments and pass them to container via exec command
+* Create soft link to this wrapper of all possible executables your application has to offer
+
