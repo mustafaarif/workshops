@@ -9,7 +9,7 @@ This example demonstrates building Gromacs Package with MPI support inside a con
 Explore Gromacs website and identify package requirements.
 http://manual.gromacs.org/documentation/2020/install-guide
 
-Note: You can skip Step 02 and Step 03, if you already have a MPICH base container. Instead issue following to copy the exisiting MPICH base container
+Note: You can skip Step 02 and Step 03, if you already have a MPICH base container. Instead issue following to make a copy of exisiting MPICH base container
 ```sh
 $ mkdir -p ~/container-builds/gromacs/ && cd ~/container-builds/gromacs/
 
@@ -135,4 +135,16 @@ Make this container act like system native application
 
 * Write a wrapper script which takes all the arguments and pass them to container via exec command
 * Create soft link to this wrapper of all possible executables your application has to offer
+
+```sh
+raad2a:~ $ ~/workshops/containers-hpc/gromacs-build/gromacs.sh ~/opt/gromacs/2020/bin
+raad2a:~ $ ln -s ~/opt/gromacs/2020/bin/gromacs.sh gmx_mpi
+raad2a:~ $ export PATH=~/opt/gromacs/2020/bin:$PATH
+```
+Now see if we call gmx_mpi natively on system;
+```sh
+raad2a:~ $ gmx_mpi --version
+```
+# Create a Batch Job file to run computation on multiple nodes
+
 
