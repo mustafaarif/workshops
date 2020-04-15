@@ -15,37 +15,37 @@ $ mkdir -p ~/container-builds/mpich && cd ~/container-builds/mpich
 
 $ singularity build --sandbox mpich33 docker://ubuntu:18.04
 
-$ singularity shell --writable mpich33
+$ singularity shell --writable ~/container-builds/mpich/mpich33
 
-$ apt-get update
+Singularity> apt-get update
 
-$ export DEBIAN_FRONTEND=noninteractive
+Singularity> export DEBIAN_FRONTEND=noninteractive
 
-$ apt-get -y install build-essential wget nano git locales-all tzdata
+Singularity> apt-get -y install build-essential wget nano git locales-all tzdata
 
-$ ln -fs /usr/share/zoneinfo/Asia/Qatar /etc/localtime
+Singularity> ln -fs /usr/share/zoneinfo/Asia/Qatar /etc/localtime
 ```
 
 ## Step 02
 Install MPICH inside the container
 
 ```sh
-$ export MPICH_VERSION=3.3
+Singularity> export MPICH_VERSION=3.3
 
-$ export MPICH_URL="http://www.mpich.org/static/downloads/$MPICH_VERSION/mpich-$MPICH_VERSION.tar.gz"
+Singularity> export MPICH_URL="http://www.mpich.org/static/downloads/$MPICH_VERSION/mpich-$MPICH_VERSION.tar.gz"
 
-$ mkdir -p /tmp/downloads
+Singularity> mkdir -p /tmp/downloads
 
-$ cd /tmp/downloads && wget -O mpich-$MPICH_VERSION.tar.gz $MPICH_URL && tar xzf mpich-$MPICH_VERSION.tar.gz
+Singularity> cd /tmp/downloads && wget -O mpich-$MPICH_VERSION.tar.gz $MPICH_URL && tar xzf mpich-$MPICH_VERSION.tar.gz
 
-$ cd /tmp/downloads/mpich-$MPICH_VERSION
+Singularity> cd /tmp/downloads/mpich-$MPICH_VERSION
 
-$ ./configure
+Singularity> ./configure
 # Did config failed? Are we missing any package? Hint: apt-get install gfortran
 
-$ make -j 4
+Singularity> make -j 4
 
-$ make install
+Singularity> make install
 ```
 
 # Step 03
@@ -65,19 +65,19 @@ Copy production ready container to raad2
 ```sh
 # From your local system where you have VPN connection to TAMUQ established, do ssh to raad2 and issue following;
 
-$ mkdir -p ~/opt/mpich/33
+raad2a:~ $ mkdir -p ~/opt/mpich/33
 
-$ cd ~/opt/mpich/33
+raad2a:~ $ cd ~/opt/mpich/33
 
-$ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/mpich33.sif .
+raad2a:~ $ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/mpich33.sif ~/opt/mpich/33/mpich33.sif
 
 # Verify version of mpiexec
-$ singularity exec ~/opt/mpich/33/mpich33.sif mpiexec --version
+raad2a:~ $ singularity exec ~/opt/mpich/33/mpich33.sif mpiexec --version
 
 # Run sample application provided in this directory
-$ singularity exec ~/opt/mpich/33/mpich33.sif mpicc -o pi.out pi.c
+raad2a:~ $ singularity exec ~/opt/mpich/33/mpich33.sif mpicc -o pi.out pi.c
 
-$ singularity exec ~/opt/mpich/33/mpich33.sif ./pi.out
+raad2a:~ $ singularity exec ~/opt/mpich/33/mpich33.sif ./pi.out
 ```
 # Step 05
 Submit a batch job which spans over 02 nodes to verify that if MPI communication is working fine
@@ -85,7 +85,7 @@ Submit a batch job which spans over 02 nodes to verify that if MPI communication
 Inspect slurm.job file placed in this directory
 
 ```sh
-$ sbatch slurm.job
-$ cat slurm-<jobid>.out
+raad2a:~ $ sbatch slurm.job
+raad2a:~ $ cat slurm-<jobid>.out
 ```
 
