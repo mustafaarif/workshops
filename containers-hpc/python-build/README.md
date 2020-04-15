@@ -91,5 +91,13 @@ $ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/py382docker
 $ singularity exec py382docker.sif python3 -c 'import tensorflow as tf; print(tf.__version__)'
 
 # Run sample application
-singularity exec py382docker.sif python3 linearreg.py 
+$ singularity exec py382docker.sif python3 linearreg.py 
+```
+
+## Submit a SLURM job file
+Inspect slurm.job file in this directory and make any changes if required
+
+```sh
+$ sbatch slurm.job
+$ cat slurm-<jobid>.out
 ```
