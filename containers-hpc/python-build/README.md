@@ -2,9 +2,11 @@
 
 There are various options to satisfy Python build requirements.
 
-A. Find out if there is any official Python container which provides Python 3.8.2 (recommended)
+* Find out if there is any official Python container which provides Python 3.8.2 (recommended)
+** Quick build wit least effort.
 
-B. Otherwise, build Python on top of desired OS.
+* Otherwise, build Python on top of desired OS.
+** Requires effort, but offers flexibility of choosing various optimization paramteres.
 
 ## Option 01 (Build from Python Container)
 
