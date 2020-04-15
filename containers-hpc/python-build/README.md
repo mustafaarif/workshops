@@ -6,8 +6,8 @@ There are various options to satisfy Python build requirements.
   * Quick build wit least effort.
 * Otherwise, build Python on top of desired OS.
   * Requires effort, but offers flexibility of choosing various optimization paramteres.
-
-## Option 01 (Build from Python Container)
+## Step 01: Build production ready container
+### Option 01 (Build from Python Container)
 
 Explore https://hub.docker.com and identify if Python 3.8.2 tag is available.
 
@@ -42,14 +42,12 @@ $ du -hs py382docker
 $ singularity build py382docker.sif py382docker
 
 # Move container to /tmp so that it can be accessed via student account remotely
-$ mv py382docker.sif /tmp && chown student:student /tmp/py382docker.sif
+$ mv py382docker.sif /tmp
+$ chown student:student /tmp/py382docker.sif
 
-# From your local system where you have VPN connection established, do ssh to raad2 and issue following;
-$ mkdir -p ~/opt/python/382 && cd ~/opt/python/382
-$ scp -P <port> student@ml-lab-6bd431c8-71a3-4512-bb90-bc2cdb13d41d.southcentralus.cloudapp.azure.com
 ```
 
-## Option 02 (Build from Source)
+### Option 02 (Build from Source)
 Log in to Dev workstation;
 ```sh
 
@@ -78,5 +76,15 @@ cd Python-3.8.2 && mkdir build && cd build
 make -j 4
 
 make install
+
+```
+
+## Transfer container to HPC system raad2
+
+```sh
+# From your local system where you have VPN connection established, do ssh to raad2 and issue following;
+$ mkdir -p ~/opt/python/382
+$ cd ~/opt/python/382
+$ scp -P <port> student@ml-xx.southcentralus.cloudapp.azure.com:/tmp/py382docker.sif
 
 ```
