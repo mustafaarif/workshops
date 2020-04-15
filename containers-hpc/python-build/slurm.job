@@ -2,7 +2,7 @@
 #SBATCH -J python_test
 #SBATCH -p l_long
 #SBATCH --reservation=training2020
-#SBATCH --qos ll
+#SBATCH --qos=ll
 #SBATCH --time=00:05:00
 #SBATCH -N 1
 #SBATCH --ntasks-per-node=24
