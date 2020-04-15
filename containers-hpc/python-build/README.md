@@ -12,7 +12,7 @@ There are various options to satisfy Python build requirements.
 Explore https://hub.docker.com and identify if Python 3.8.2 tag is available.
 
 Log in to Dev workstation;
-'''sh
+```sh
 $ sudo su - 
 
 $ mkdir -p ~/container-builds/python && cd ~/container-builds/python
@@ -36,20 +36,19 @@ Singularity> python3 -c 'import tensorflow as tf'
 
 Singularity> exit
 
-#Check the size of the container after customizing your container with requirements
+# Check the size of the container after customizing your container with requirements
 $ du -hs py382docker
 
-#Make your container production ready by converting sandbox to non-writable image file
+# Make your container production ready by converting sandbox to non-writable image file
 $ singularity build py382docker.sif py382docker
 
-#Move container to /tmp so that it can be accessed via student account remotely
+# Move container to /tmp so that it can be accessed via student account remotely
 $ mv py382docker.sif /tmp && chown student:student /tmp/py382docker.sif
 
-#From your local system where you have VPN connection established, do ssh to raad2 and issue following;
+# From your local system where you have VPN connection established, do ssh to raad2 and issue following;
 $ mkdir -p ~/opt/python/382 && cd ~/opt/python/382
 $ scp -P <port> student@ml-lab-6bd431c8-71a3-4512-bb90-bc2cdb13d41d.southcentralus.cloudapp.azure.com
-
-'''
+```
 
 
 
