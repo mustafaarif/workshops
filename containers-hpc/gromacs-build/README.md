@@ -28,42 +28,44 @@ $ singularity build --sandbox gromacs2020 docker://ubuntu:18.04
 
 $ singularity shell --writable gromacs2020
 
-$ apt-get update
+Singularity> apt-get update
 
-$ export DEBIAN_FRONTEND=noninteractive
+Singularity> export DEBIAN_FRONTEND=noninteractive
 
-$ apt-get -y install build-essential wget nano git locales-all tzdata
+Singularity> apt-get -y install build-essential wget nano git locales-all tzdata
 
-$ ln -fs /usr/share/zoneinfo/Asia/Qatar /etc/localtime
+Singularity> ln -fs /usr/share/zoneinfo/Asia/Qatar /etc/localtime
 ```
 
 ## Step 03
 Install MPICH inside the container. You dont have to do this step if you are using base MPICH container which was already built.
 ```sh
-$ export MPICH_VERSION=3.3
+Singularity> export MPICH_VERSION=3.3
 
-$ export MPICH_URL="http://www.mpich.org/static/downloads/$MPICH_VERSION/mpich-$MPICH_VERSION.tar.gz"
+Singularity> export MPICH_URL="http://www.mpich.org/static/downloads/$MPICH_VERSION/mpich-$MPICH_VERSION.tar.gz"
 
-$ mkdir -p /tmp/downloads
+Singularity> mkdir -p /tmp/downloads
 
-$ cd /tmp/downloads && wget -O mpich-$MPICH_VERSION.tar.gz $MPICH_URL && tar xzf mpich-$MPICH_VERSION.tar.gz
+Singularity> cd /tmp/downloads && wget -O mpich-$MPICH_VERSION.tar.gz $MPICH_URL && tar xzf mpich-$MPICH_VERSION.tar.gz
 
-$ cd /tmp/downloads/mpich-$MPICH_VERSION
+Singularity> cd /tmp/downloads/mpich-$MPICH_VERSION
 
-$ ./configure
+Singularity> ./configure
 # Did config failed? Are we missing any package? Hint: apt-get install gfortran
 
-$ make -j 4
+Singularity> make -j 4
 
-$ make install
+Singularity> make install
+
+Singularity> exit
 ```
 
 ## Step 04
 Download and build Gromacs
 ```sh
-$ cd ~/container-builds/gromacs2020
+$ cd ~/container-builds/gromacs
 
-$ singularity shell --writable gromacs2020
+$ singularity shell --writable ~/container-builds/gromacs/gromacs2020
 
 Singularity> mkdir -p /tmp/downloads
 
@@ -92,7 +94,7 @@ However when you are running singularity on raad2 on multi-node it is not possib
 ```sh
 Singularity> cd /.singularity.d/
 Singularity> touch 99-gromacs2020.sh
-# Open this file via nano or vim editor and paste below variables;
+# Open '99-gromacs2020.sh' via nano or vim editor and paste below variables;
 LD_LIBRARY_PATH=/usr/local/gromacs/lib:$LD_LIBRARY_PATH
 GMXBIN=/usr/local/gromacs/bin
 GMXDATA=/usr/local/gromacs/share/gromacs
@@ -110,7 +112,7 @@ Convert Sandbox Container to Production ready container (.sif image)
 # Make your container production ready by converting sandbox to non-writable image file
 $ singularity build ~/container-builds/gromacs2020/gromacs2020.sif ~/container-builds/gromacs2020
 
-# Move container to /tmp so that it can be accessed via student account remotely
+# Move container to /tmp so that it can be accessed via student account over scp
 
 $ mv ~/container-builds/gromacs2020/gromacs2020.sif /tmp
 
